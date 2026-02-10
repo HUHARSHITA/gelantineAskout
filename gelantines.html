@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Girls' Gelatine Date! 🍦</title>
+    <style>
+        :root {
+            --pink-dream: #fff0f6;
+            --rose-text: #d63384;
+            --yes-green: #28a745;
+            --no-red: #dc3545;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--pink-dream);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 40px;
+            box-shadow: 0 10px 30px rgba(214, 51, 132, 0.1);
+            text-align: center;
+            max-width: 90vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        img {
+            width: 180px;
+            border-radius: 20px;
+        }
+
+        h1 {
+            color: var(--rose-text);
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        p {
+            color: #888;
+            font-style: italic;
+        }
+
+        .btn-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap; /* Allows Yes to grow without breaking layout */
+            width: 100%;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        #yesBtn {
+            background-color: var(--yes-green);
+            color: white;
+            min-width: 100px;
+        }
+
+        #noBtn {
+            background-color: var(--no-red);
+            color: white;
+            position: relative;
+            z-index: 15;
+        }
+
+        /* Butterfly Animation */
+        .butterfly {
+            position: fixed;
+            font-size: 2rem;
+            user-select: none;
+            z-index: 5;
+            pointer-events: none;
+            animation: fly 4s linear forwards;
+        }
+
+        @keyframes fly {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+            25% { transform: translate(100px, -150px) rotate(20deg); }
+            50% { transform: translate(-50px, -300px) rotate(-20deg); }
+            75% { transform: translate(150px, -450px) rotate(10deg); }
+            100% { transform: translate(0, -600px) rotate(0deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainBox">
+        <img id="mainGif" src="https://media.tenor.com/m/fA_6_9zK-E0AAAAC/bubu-dudu-sseeyall.gif">
+        <h1>Gelatine with the Me? 🍦✨</h1>
+        <p>Strictly no boys allowed!</p>
+        
+        <div class="btn-wrapper">
+            <button id="yesBtn">YES! 💖</button>
+            <button id="noBtn">No ❌</button>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const mainBox = document.getElementById('mainBox');
+        const mainGif = document.getElementById('mainGif');
+        
+        let yesScale = 1;
+
+        function moveNo() {
+            // Move No button to a random spot within the window
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 100);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+
+            // Grow the Yes button
+            yesScale += 0.4;
+            yesBtn.style.transform = `scale(${yesScale})`;
+            
+            // Switch GIF to a "Sassy" one
+            mainGif.src = "https://media1.tenor.com/m/pjBtpAFSnmgAAAAC/peach-goma-peach-and-goma.gif";
+        }
+
+        noBtn.addEventListener('mouseover', moveNo);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveNo();
+        });
+
+        yesBtn.addEventListener('click', () => {
+            mainBox.innerHTML = `
+                <img src="https://media.tenor.com/xdmZleZGjKQAAAAi/anime-kawaii.gif">
+                <h1 style="color: #28a745;">IT'S A DATE! 🍦🦋</h1>
+                <p>Prepare for the sugar rush!</p>
+            `;
+            noBtn.style.display = 'none';
+            // Start Butterfly storm
+            setInterval(createButterfly, 200);
+        });
+
+        function createButterfly() {
+            const butterflies = ['🦋', '✨', '🌸', '💖'];
+            const b = document.createElement('div');
+            b.classList.add('butterfly');
+            b.innerHTML = butterflies[Math.floor(Math.random() * butterflies.length)];
+            b.style.left = Math.random() * 100 + 'vw';
+            b.style.top = '100vh';
+            b.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            document.body.appendChild(b);
+            
+            setTimeout(() => b.remove(), 4000);
+        }
+    </script>
+</body>
+</html>
